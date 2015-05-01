@@ -15,6 +15,31 @@ Meteor.startup(function () {
         type: "admin"
       }
     });
+
+    Accounts.createUser({
+      username: "view",
+      password: "view",
+      profile: {
+        type: "view"
+      }
+    });
+
+    Accounts.createUser({
+      username: "supervisor",
+      password: "supervisor",
+      profile: {
+        type: "supervisor"
+      }
+    });
+
+    Accounts.createUser({
+      username: "ticketer",
+      password: "ticketer",
+      profile: {
+        type: "ticketer"
+      }
+    });
+
   }
 
   //set up global variables here

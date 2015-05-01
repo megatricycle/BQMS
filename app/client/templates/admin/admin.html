@@ -1,3 +1,38 @@
 <template name="Admin">
-  <h1>Insert admin page here</h1>
+  <p>Admins</p>
+  <ul>
+    {{#each admins}}
+      <li>{{username}}</li>
+    {{/ each}}
+  </ul>
+
+  <p>Views</p>
+  <ul>
+    {{#each views}}
+      <li>{{username}}</li>
+    {{/ each}}
+  </ul>
+
+  <p>Supervisors</p>
+  <ul>
+    {{#each supervisors}}
+      <li>{{username}}</li>
+    {{/ each}}
+  </ul>
+
+  <p>Counters</p>
+  <ul>
+    {{#each counters}}
+      <li>{{username}}</li>
+    {{/ each}}
+  </ul>
+
+  <p>Ticketers</p>
+  <ul>
+    {{#each ticketers}}
+      <li>{{username}}</li>
+    {{/ each}}
+  </ul>
+
+
 </template>

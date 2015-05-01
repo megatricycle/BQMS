@@ -21,10 +21,6 @@ Meteor.publish('App', function (/* args */) {
   return App.find();
 });
 
-Meteor.publish('User', function (/* args */) {
-  return User.find();
-});
-
 Meteor.publish('FlashMessage', function (/* args */) {
   return FlashMessage.find();
 });
@@ -32,3 +28,7 @@ Meteor.publish('FlashMessage', function (/* args */) {
 Meteor.publish('Video', function (/* args */) {
   return Video.find();
 });
+
+Meteor.publish('Users', function(){
+  return Meteor.users.find();
+})
