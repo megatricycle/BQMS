@@ -2,10 +2,7 @@
 /* Server Only Methods */
 /*****************************************************************************/
 Meteor.methods({
-  /*
-   * Example:
-   *
-   * '/app/items/insert': function (item) {
-   * }
-   */
+  'createTicket': function(){
+    console.log("Creating ticket!");
+  }
 });

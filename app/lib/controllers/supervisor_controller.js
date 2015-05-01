@@ -16,6 +16,8 @@ SupervisorController = RouteController.extend({
     // Items.findOne({_id: this.params._id});
   },
 
+  layoutTemplate: 'MasterLayout',
+
   action: function () {
     // You can create as many action functions as you'd like.
     // This is the primary function for running your route.

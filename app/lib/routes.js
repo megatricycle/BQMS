@@ -1,5 +1,4 @@
 Router.configure({
-  layoutTemplate: 'MasterLayout',
   loadingTemplate: 'Loading',
   notFoundTemplate: 'NotFound'
 });
@@ -10,7 +9,6 @@ Router.route('/', {
   action: 'action',
   where: 'client'
 });
-
 
 Router.route('ticketer', {
   name: 'ticketer',
