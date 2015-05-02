@@ -31,14 +31,17 @@
   <br>
   <button id="break" type="button">Break</button>
   <br>
-  Currently serving: {{#if user.profile.currently_serving}}{{user.profile.currently_serving.ticket_number}}{{/if}}
+  Currently serving:
+  {{#if user.profile.currently_serving}}
+    {{user.profile.currently_serving.ticket_number}} - {{user.profile.currently_serving.name}}
+  {{/if}}
   <p>
     On hold:
   </p>
   <ul>
     {{#each user.profile.tickets_on_hold}}
     <li>
-      <button class="ticket-call" type="button" data-ticket="{{_id}}">{{ticket_number}}</button>
+      <button class="ticket-call" type="button" data-ticket="{{_id}}" {{ticketOnHoldDisabled}}>{{ticket_number}}</button>
     </li>
     {{/each}}
   </ul>

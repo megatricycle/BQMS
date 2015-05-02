@@ -87,6 +87,15 @@ Template.Counter.helpers({
     }
 
     return Meteor.user().profile.currently_serving? "": "disabled";
+  },
+  'ticketOnHoldDisabled': function(){
+    if(!Meteor.user()){
+      return;
+    }
+
+    if(Meteor.user().profile.currently_serving) return "disabled";
+
+    return "";
   }
 });
 
