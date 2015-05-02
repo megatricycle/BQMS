@@ -33,6 +33,94 @@ Meteor.methods({
         }
       });
     }
+  },
+  'newUser': function(username, password, type, id, msr, privilages){
+    //@TODO: perform some validation here
 
+    if(type == "counter"){
+      Accounts.createUser({
+        username: username,
+        password: password,
+        profile: {
+          type: type,
+          id: id,
+          msr: msr,
+          privilages: privilages,
+          currently_serving: null,
+          tickets_on_hold: [],
+          idle_time: 0,
+          on_transaction: false,
+          break_mode: false
+        }
+      });
+    }
+    else{
+      Accounts.createUser({
+        username: username,
+        password: password,
+        profile: {
+          type: type
+        }
+      });
+    }
+  },
+  'callNext': function(id){
+    var counter = Meteor.users.findOne({_id: id}),
+        nextTicket = Queue.find({category: {$in: counter.profile.privilages}}).fetch()[0];
+
+    //set that ticket to user's currently serving
+    Meteor.users.update({
+      _id: id
+    },{
+      $set: {
+        "profile.currently_serving": nextTicket
+      }
+    });
+
+    //remove that ticket from the queue
+    Queue.remove({_id: nextTicket._id});
+
+    console.log(counter.profile.id+" called ticket "+nextTicket.ticket_number);
+  },
+  'startTransaction': function(id){
+    //@TODO: some validation here
+
+    //set start transaction timestamp on currently serving ticket and set on_transaction to true
+    Meteor.users.update({
+      _id: id
+    },{
+      $set: {
+        "profile.currently_serving.start_transaction": new Date(),
+        "profile.on_transaction": true
+      }
+    });
+  },
+  'endTransaction': function(id){
+    //@TODO: some validation here
+
+    var msr = Meteor.users.findOne({_id: id},{"profile.currently_serving": 1}).profile.msr;
+
+    //set end transaction timestamp on currently serving ticket and set on_transaction to false
+    Meteor.users.update({
+      _id: id
+    },{
+      $set: {
+        "profile.currently_serving.end_transaction": new Date(),
+        "profile.currently_serving.msr": msr,
+        "profile.on_transaction": false
+      }
+    });
+
+    var ticket = Meteor.users.findOne({_id: id},{"profile.currently_serving": 1}).profile.currently_serving;
+
+    Meteor.users.update({
+      _id: id
+    },{
+      $set: {
+        "profile.currently_serving": null
+      }
+    });
+
+    Ticket.insert(ticket);
   }
 });

@@ -1,3 +1,33 @@
 <template name="Counter">
-  <h1>This page is for counters.</h1>
+  <p>
+    {{app.name}}
+  </p>
+  <p>
+    {{time}}
+  </p>
+  <p>
+    Branch Queue Management System by Peter
+  </p>
+  <p>
+    Counter {{user.profile.id}}
+  </p>
+  <p>
+    MSR name: {{user.profile.msr}}
+  </p>
+  <p>
+    Your privilages: {{user.profile.privilages}}
+  </p>
+  <button id="callNext" type="button" {{callNextDisabled}}>Call Next</button>
+  <br>
+  <button id="sendAlert" type="button" {{servingTicketDisabled}}>Send Alert</button>
+  <br>
+  <button id="putOnHold" type="button" {{putOnHoldDisabled}}>Put on Hold</button>
+  <br>
+  <button id="startTransaction" type="button" {{startTransactionDisabled}}>Start transaction</button>
+  <br>
+  <button id="endTransaction" type="button" {{endTransactionDisabled}}>End transaction</button>
+  <br>
+  <button id="break" type="button">Break</button>
+  <br>
+  Currently serving: {{#if user.profile.currently_serving}}{{user.profile.currently_serving.ticket_number}}{{/if}}
 </template>

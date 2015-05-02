@@ -13,8 +13,15 @@ Meteor.publish('Counter', function (/* args */) {
   return Counter.find();
 });
 
-Meteor.publish('Queue', function (/* args */) {
-  return Queue.find();
+Meteor.publish('Queue', function () {
+  if(!this.userId){
+    this.ready();
+    return;
+  }
+
+  var privilages = Meteor.users.findOne({_id: this.userId}).profile.privilages;
+
+  return Queue.find({category: {$in: privilages}});
 });
 
 Meteor.publish('App', function (/* args */) {
@@ -31,4 +38,4 @@ Meteor.publish('Video', function (/* args */) {
 
 Meteor.publish('Users', function(){
   return Meteor.users.find();
-})
+});

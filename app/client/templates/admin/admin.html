@@ -6,12 +6,26 @@
     {{/ each}}
   </ul>
 
+  <p>Add new admin</p>
+  <form id="create-admin" action="">
+    Username: <input id="create-admin-username" type="text">
+    Password: <input id="create-admin-password" type="password">
+    <input type="submit">
+  </form>
+
   <p>Views</p>
   <ul>
     {{#each views}}
       <li>{{username}}</li>
     {{/ each}}
   </ul>
+
+  <p>Add new view</p>
+  <form id="create-view" action="">
+    Username: <input id="create-view-username" type="text">
+    Password: <input id="create-view-password" type="password">
+    <input type="submit">
+  </form>
 
   <p>Supervisors</p>
   <ul>
@@ -20,12 +34,12 @@
     {{/ each}}
   </ul>
 
-  <p>Counters</p>
-  <ul>
-    {{#each counters}}
-      <li>{{username}}</li>
-    {{/ each}}
-  </ul>
+  <p>Add new supervisor</p>
+  <form id="create-supervisor" action="">
+    Username: <input id="create-supervisor-username" type="text">
+    Password: <input id="create-supervisor-password" type="password">
+    <input type="submit">
+  </form>
 
   <p>Ticketers</p>
   <ul>
@@ -33,6 +47,38 @@
       <li>{{username}}</li>
     {{/ each}}
   </ul>
+
+  <p>Add new ticketer</p>
+  <form id="create-ticketer" action="">
+    Username: <input id="create-ticketer-username" type="text">
+    Password: <input id="create-ticketer-password" type="password">
+    <input type="submit">
+  </form>
+
+  <p>Counters</p>
+  <ul>
+    {{#each counters}}
+      <li>{{username}}: {{profile.id}}</li>
+    {{/ each}}
+  </ul>
+
+  <p>Add new counter</p>
+  <form id="create-counter" action="">
+    Username: <input id="create-counter-username" type="text">
+    Password: <input id="create-counter-password" type="password">
+    Counter ID: <input id="create-counter-id" type="text">
+    Name of MSR: <input id="create-counter-MSR" type="text">
+    <br>
+    Privilages:
+    <br>
+    Type A <input type="checkbox" value="Type A">
+    Type B <input type="checkbox" value="Type B">
+    Type C <input type="checkbox" value="Type C">
+    Type D <input type="checkbox" value="Type D">
+    Type E <input type="checkbox" value="Type E">
+    <input type="submit">
+  </form>
+
 
 
 </template>

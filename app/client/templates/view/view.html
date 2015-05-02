@@ -1,3 +1,7 @@
 <template name="View">
-  <h1>Find me in app/client/templates/view/view</h1>
+  <ul>
+    {{#each counter}}
+      <li>{{profile.id}} - {{profile.currently_serving.ticket_number}}</li>
+    {{/each}}
+  </ul>
 </template>

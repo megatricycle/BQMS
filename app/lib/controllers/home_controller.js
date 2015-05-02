@@ -17,6 +17,9 @@ HomeController = RouteController.extend({
         case 'counter':
           Router.go('counter');
           break;
+        case 'ticketer':
+          Router.go('ticketer');
+          break;
         default:
           this.render('Home');
       }

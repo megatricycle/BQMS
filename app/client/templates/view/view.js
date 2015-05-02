@@ -8,6 +8,12 @@ Template.View.events({
 /* View: Helpers */
 /*****************************************************************************/
 Template.View.helpers({
+  'counter': function(){
+    return Meteor.users.find({"profile.type": "counter"}, {
+      "profile.id": 1,
+      "profile.currently_serving": 1
+    });
+  }
 });
 
 /*****************************************************************************/
