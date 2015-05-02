@@ -73,7 +73,17 @@ Meteor.methods({
       _id: id
     },{
       $set: {
-        "profile.currently_serving": nextTicket
+        "profile.currently_serving": nextTicket,
+
+      }
+    });
+
+    Meteor.users.update({
+      _id: id
+    },{
+      $set: {
+        "profile.currently_serving.served_on": new Date(),
+        "profile.currently_serving.times_called": 1
       }
     });
 
@@ -81,6 +91,44 @@ Meteor.methods({
     Queue.remove({_id: nextTicket._id});
 
     console.log(counter.profile.id+" called ticket "+nextTicket.ticket_number);
+  },
+  'putOnHold': function(id){
+    var ticket = Meteor.users.findOne({_id: id}, {"profile.currently_serving": 1}).profile.currently_serving;
+
+    Meteor.users.update({_id: id}, {
+      $push: {
+        "profile.tickets_on_hold": ticket
+      },
+      $set: {
+        "profile.currently_serving": null
+      }
+    });
+  },
+  'noShow': function(id){
+    var msr = Meteor.users.findOne({_id: id},{"profile.currently_serving": 1}).profile.msr;
+
+    //set no show flag and set on_transaction to false
+    Meteor.users.update({
+      _id: id
+    },{
+      $set: {
+        "profile.currently_serving.no_show": true,
+        "profile.currently_serving.msr": msr,
+        "profile.on_transaction": false
+      }
+    });
+
+    var ticket = Meteor.users.findOne({_id: id},{"profile.currently_serving": 1}).profile.currently_serving;
+
+    Meteor.users.update({
+      _id: id
+    },{
+      $set: {
+        "profile.currently_serving": null
+      }
+    });
+
+    Ticket.insert(ticket);
   },
   'startTransaction': function(id){
     //@TODO: some validation here
@@ -122,5 +170,27 @@ Meteor.methods({
     });
 
     Ticket.insert(ticket);
-  }
+  },
+  'ticketCall': function(id, ticketId){
+    var ticket = Meteor.users.findOne({_id: id}, {
+      "profile.tickets_on_hold": {
+        $elemMatch: {
+          _id: ticket
+        }
+      }
+    }).profile.tickets_on_hold[0];
+
+    ticket.times_called++
+
+    Meteor.users.update({_id: id}, {
+      $pull: {
+        "profile.tickets_on_hold": {
+          _id: ticketId
+        }
+      },
+      $set: {
+        "profile.currently_serving": ticket
+      }
+    });
+  },
 });

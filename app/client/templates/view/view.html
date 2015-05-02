@@ -1,4 +1,10 @@
 <template name="View">
+  <p>
+    {{app.name}}
+  </p>
+  <p>
+    {{time}}
+  </p>
   <ul>
     {{#each counter}}
       <li>{{profile.id}} - {{profile.currently_serving.ticket_number}}</li>

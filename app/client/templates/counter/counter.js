@@ -6,12 +6,20 @@ Template.Counter.events({
     Meteor.call('callNext', Meteor.userId());
   },
   //sendalert,
-  //putonhold,
+  'click #putOnHold': function(){
+    Meteor.call('putOnHold', Meteor.userId());
+  },
+  'click #noShow': function(){
+    Meteor.call('noShow', Meteor.userId());
+  },
   'click #startTransaction': function(){
     Meteor.call('startTransaction', Meteor.userId());
   },
   'click #endTransaction': function(){
     Meteor.call('endTransaction', Meteor.userId());
+  },
+  'click .ticket-call': function(e){
+    Meteor.call('ticketCall', Meteor.userId(), $(e.target).data("ticket"));
   }
 });
 
@@ -40,7 +48,24 @@ Template.Counter.helpers({
       return;
     }
 
-    return !Meteor.user().profile.currently_serving? "disabled": Meteor.user().profile.on_transaction? "disabled": "";
+    if(!Meteor.user().profile.currently_serving) return "disabled";
+
+    if(Meteor.user().profile.on_transaction) return "disabled";
+
+    if(Meteor.user().profile.currently_serving.times_called >= 3) return "disabled";
+
+    return "";
+  },
+  'noShowDisabled': function(){
+    if(!Meteor.user()){
+      return;
+    }
+
+    if(!Meteor.user().profile.currently_serving) return "disabled";
+
+    if(Meteor.user().profile.currently_serving && Meteor.user().profile.on_transaction) return "disabled";
+
+    return "";
   },
   'startTransactionDisabled': function(){
     if(!Meteor.user()){

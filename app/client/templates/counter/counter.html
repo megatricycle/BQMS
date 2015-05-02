@@ -23,6 +23,8 @@
   <br>
   <button id="putOnHold" type="button" {{putOnHoldDisabled}}>Put on Hold</button>
   <br>
+  <button id="noShow" type="button" {{noShowDisabled}}>No show</button>
+  <br>
   <button id="startTransaction" type="button" {{startTransactionDisabled}}>Start transaction</button>
   <br>
   <button id="endTransaction" type="button" {{endTransactionDisabled}}>End transaction</button>
@@ -30,4 +32,14 @@
   <button id="break" type="button">Break</button>
   <br>
   Currently serving: {{#if user.profile.currently_serving}}{{user.profile.currently_serving.ticket_number}}{{/if}}
+  <p>
+    On hold:
+  </p>
+  <ul>
+    {{#each user.profile.tickets_on_hold}}
+    <li>
+      <button class="ticket-call" type="button" data-ticket="{{_id}}">{{ticket_number}}</button>
+    </li>
+    {{/each}}
+  </ul>
 </template>
