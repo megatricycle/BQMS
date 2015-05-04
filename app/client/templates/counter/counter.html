@@ -17,6 +17,15 @@
   <p>
     Your privilages: {{user.profile.privilages}}
   </p>
+  Currently serving:
+  {{#if user.profile.currently_serving}}
+    {{user.profile.currently_serving.ticket_number}} - {{user.profile.currently_serving.name}}
+  {{/if}}
+  <br>
+  Put on hold countdown: {{user.profile.put_on_hold_countdown}}
+  <br>
+  Service time: {{serviceTime}}
+  <br>
   <button id="callNext" type="button" {{callNextDisabled}}>Call Next</button>
   <br>
   <button id="sendAlert" type="button" {{servingTicketDisabled}}>Send Alert</button>
@@ -29,12 +38,8 @@
   <br>
   <button id="endTransaction" type="button" {{endTransactionDisabled}}>End transaction</button>
   <br>
-  <button id="break" type="button">Break</button>
+  <button id="break" type="button" {{breakDisabled}}>Break</button>
   <br>
-  Currently serving:
-  {{#if user.profile.currently_serving}}
-    {{user.profile.currently_serving.ticket_number}} - {{user.profile.currently_serving.name}}
-  {{/if}}
   <p>
     On hold:
   </p>

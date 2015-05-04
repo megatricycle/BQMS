@@ -1,5 +1,6 @@
 AdminController = RouteController.extend({
   subscriptions: function () {
+    this.subscribe('App').wait();
     this.subscribe('Users').wait();
   },
 

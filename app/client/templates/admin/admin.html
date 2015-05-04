@@ -1,4 +1,14 @@
 <template name="Admin">
+
+  <h3>App settings</h3>
+  Branch name: {{app.name}}
+  <form id="app-form">
+    <input id="app-form-name" type="text" name="name" value="{{app.name}}">
+    <input type="submit">
+  </form>
+
+  <h3>Accounts</h3>
+
   <p>Admins</p>
   <ul>
     {{#each admins}}

@@ -6,8 +6,6 @@ Meteor.methods({
   'createTicket': function(category, type, name){
     var number = App.findOne().next_ticket.ticketFormat();
 
-    console.log("Creating new ticket ("+category+","+type+","+name+","+branch+","+number+")");
-
     //insert the ticket to the db
     Queue.insert({
       category: category,
@@ -34,6 +32,13 @@ Meteor.methods({
       });
     }
   },
+  'appName': function(name){
+    App.update({},{
+      $set: {
+        name: name
+      }
+    });
+  },
   'newUser': function(username, password, type, id, msr, privilages){
     //@TODO: perform some validation here
 
@@ -49,6 +54,7 @@ Meteor.methods({
           currently_serving: null,
           tickets_on_hold: [],
           idle_time: 0,
+          put_on_hold_countdown: 0,
           on_transaction: false,
           break_mode: false
         }
@@ -73,8 +79,7 @@ Meteor.methods({
       _id: id
     },{
       $set: {
-        "profile.currently_serving": nextTicket,
-
+        "profile.currently_serving": nextTicket
       }
     });
 
@@ -83,14 +88,21 @@ Meteor.methods({
     },{
       $set: {
         "profile.currently_serving.served_on": new Date(),
-        "profile.currently_serving.times_called": 1
+        "profile.currently_serving.times_called": 1,
+        "profile.put_on_hold_countdown": 15
       }
     });
 
     //remove that ticket from the queue
     Queue.remove({_id: nextTicket._id});
+  },
+  'sendAlert': function(id){
+    //@TODO: do this
+    var ticket = Meteor.users.findOne({
+      _id: id
+    }).profile.currently_serving.ticket_number;
 
-    console.log(counter.profile.id+" called ticket "+nextTicket.ticket_number);
+    console.log("Dingdong for "+ticket+"!");
   },
   'putOnHold': function(id){
     var ticket = Meteor.users.findOne({_id: id}, {"profile.currently_serving": 1}).profile.currently_serving;
@@ -139,7 +151,8 @@ Meteor.methods({
     },{
       $set: {
         "profile.currently_serving.start_transaction": new Date(),
-        "profile.on_transaction": true
+        "profile.on_transaction": true,
+        "profile.put_on_hold_countdown": 0
       }
     });
   },
@@ -155,7 +168,7 @@ Meteor.methods({
       $set: {
         "profile.currently_serving.end_transaction": new Date(),
         "profile.currently_serving.msr": msr,
-        "profile.on_transaction": false
+        "profile.on_transaction": false,
       }
     });
 
@@ -189,8 +202,26 @@ Meteor.methods({
         }
       },
       $set: {
-        "profile.currently_serving": ticket
+        "profile.currently_serving": ticket,
+        "profile.put_on_hold_countdown": 15
       }
     });
   },
+  'countdowns': function(){
+    Meteor.setInterval(function(){
+      //put on hold
+      Meteor.users.update({
+        "profile.type": "counter",
+        "profile.put_on_hold_countdown": {
+          $gt: 0
+        }
+      }, {
+        $inc: {
+          "profile.put_on_hold_countdown": -1
+        }
+      },{
+        multi: true
+      });
+    }, 1000);
+  }
 });

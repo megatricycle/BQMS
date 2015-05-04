@@ -2,6 +2,13 @@
 /* Admin: Event Handlers */
 /*****************************************************************************/
 Template.Admin.events({
+  'submit #app-form': function(e){
+    e.preventDefault();
+
+    var name = $("#app-form").find("#app-form-name").val();
+
+    Meteor.call('appName', name);
+  },
   'submit #create-admin': function(e){
     e.preventDefault();
 
@@ -66,6 +73,9 @@ Template.Admin.events({
 /* Admin: Helpers */
 /*****************************************************************************/
 Template.Admin.helpers({
+  app: function(){
+    return App.findOne();
+  },
   admins: function(){
     return Meteor.users.find({'profile.type': 'admin'}, {$sort: {createdAt: 1}});
   },

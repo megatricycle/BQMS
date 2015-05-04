@@ -1,4 +1,7 @@
 Meteor.startup(function () {
+  //start decrementing countdowns
+  Meteor.call('countdowns');
+
   //insert data seeding here if required fields are empty
   if(App.find().count() == 0){
     App.insert({

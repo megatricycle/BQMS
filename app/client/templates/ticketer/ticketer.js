@@ -16,6 +16,14 @@ Template.Ticketer.events({
 /* Ticketer: Helpers */
 /*****************************************************************************/
 Template.Ticketer.helpers({
+  'name': function(){
+    if(!App.findOne()) return;
+
+    return App.findOne().name;
+  },
+  'time': function(){
+    return moment(TimeSync.serverTime()).format("MM/DD/YYYY hh:mm:ss a");
+  }
 });
 
 /*****************************************************************************/

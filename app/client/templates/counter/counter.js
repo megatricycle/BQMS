@@ -5,7 +5,9 @@ Template.Counter.events({
   'click #callNext': function(){
     Meteor.call('callNext', Meteor.userId());
   },
-  //sendalert,
+  'click #sendAlert': function(){
+    Meteor.call('sendAlert', Meteor.userId());
+  },
   'click #putOnHold': function(){
     Meteor.call('putOnHold', Meteor.userId());
   },
@@ -36,12 +38,27 @@ Template.Counter.helpers({
   'user': function(){
     return Meteor.user();
   },
+  'serviceTime': function(){
+    if(!Meteor.user()) return;
+
+    if(!Meteor.user().profile.on_transaction) return "00:00";
+
+    //current time - start_transaction time
+    var time = moment(moment(TimeSync.serverTime()) - moment(Meteor.user().profile.currently_serving.start_transaction));
+
+    return time.format("mm:ss");
+  },
+  //all helpers below are for disabling buttons
   'callNextDisabled': function(){
     if(!Meteor.user()){
       return;
     }
 
-    return Queue.find().count() == 0? "disabled": Meteor.user().profile.currently_serving? "disabled": "";
+    if(Queue.find().count() == 0) return "disabled";
+
+    if(Meteor.user().profile.currently_serving) return "disabled";
+
+    return "";
   },
   'putOnHoldDisabled': function(){
     if(!Meteor.user()){
@@ -51,6 +68,8 @@ Template.Counter.helpers({
     if(!Meteor.user().profile.currently_serving) return "disabled";
 
     if(Meteor.user().profile.on_transaction) return "disabled";
+
+    if(Meteor.user().profile.put_on_hold_countdown > 0) return "disabled";
 
     if(Meteor.user().profile.currently_serving.times_called >= 3) return "disabled";
 
@@ -63,6 +82,8 @@ Template.Counter.helpers({
 
     if(!Meteor.user().profile.currently_serving) return "disabled";
 
+    if(Meteor.user().profile.put_on_hold_countdown > 0) return "disabled";
+
     if(Meteor.user().profile.currently_serving && Meteor.user().profile.on_transaction) return "disabled";
 
     return "";
@@ -72,23 +93,42 @@ Template.Counter.helpers({
       return;
     }
 
-    return !Meteor.user().profile.currently_serving? "disabled": Meteor.user().profile.on_transaction? "disabled": "";
+    if(!Meteor.user().profile.currently_serving) return "disabled";
+
+    if(Meteor.user().profile.on_transaction) return "disabled";
+
+    return "";
   },
   'endTransactionDisabled': function(){
     if(!Meteor.user()){
       return;
     }
 
-    return !Meteor.user().profile.currently_serving? "disabled": Meteor.user().profile.on_transaction? "": "disabled";
+    if(!Meteor.user().profile.currently_serving) return "disabled";
+
+    if(!Meteor.user().profile.on_transaction) return "disabled";
+
+    return "";
   },
   'servingTicketDisabled': function(){
     if(!Meteor.user()){
       return;
     }
 
-    return Meteor.user().profile.currently_serving? "": "disabled";
+    if(!Meteor.user().profile.currently_serving) return "disabled";
+
+    return "";
   },
   'ticketOnHoldDisabled': function(){
+    if(!Meteor.user()){
+      return;
+    }
+
+    if(Meteor.user().profile.currently_serving) return "disabled";
+
+    return "";
+  },
+  'breakDisabled': function(){
     if(!Meteor.user()){
       return;
     }
