@@ -1,3 +1,61 @@
 <template name="Supervisor">
-  <h1>This page is for the supervisor page. Display awezum stats here</h1>
+  {{app.name}}
+  <br>
+  {{time}}
+  <br>
+
+  Type A: {{queue.a}}
+  <br>
+  Type B: {{queue.b}}
+  <br>
+  Type C: {{queue.c}}
+  <br>
+  Type D: {{queue.d}}
+  <br>
+  Type E: {{queue.e}}
+  <br>
+
+  <p>Counters</p>
+  <ul>
+    {{#each counters}}
+      {{#if selected username}}
+        <li>
+          <form id="edit-counter">
+            {{username}}:
+            <input id="edit-counter-id" type="text" value="{{profile.id}}"> -
+            <input type="checkbox" value="Type A" {{isChecked profile.privilages "Type A"}}> Type A
+            <input type="checkbox" value="Type B" {{isChecked profile.privilages "Type B"}}> Type B
+            <input type="checkbox" value="Type C" {{isChecked profile.privilages "Type C"}}> Type C
+            <input type="checkbox" value="Type D" {{isChecked profile.privilages "Type D"}}> Type D
+            <input type="checkbox" value="Type E" {{isChecked profile.privilages "Type E"}}> Type E -
+            <input id="edit-counter-MSR" type="text" value="{{profile.msr}}">
+            <input type="submit" value="Done">
+          </form>
+        </li>
+      {{else}}
+        <li>
+          {{username}}: {{profile.id}} - {{profile.privilages}} - {{profile.msr}}
+          <button class="edit-btn" type="button">Edit</button>
+        </li>
+      {{/if}}
+    {{/ each}}
+  </ul>
+
+  <p>Add new counter</p>
+  <form id="create-counter" action="">
+    Username: <input id="create-counter-username" type="text">
+    Password: <input id="create-counter-password" type="password">
+    Counter ID: <input id="create-counter-id" type="text">
+    Name of MSR: <input id="create-counter-MSR" type="text">
+    <br>
+    Privilages:
+    <br>
+    <input type="checkbox" value="Type A"> Type A
+    <input type="checkbox" value="Type B"> Type B
+    <input type="checkbox" value="Type C"> Type C
+    <input type="checkbox" value="Type D"> Type D
+    <input type="checkbox" value="Type E"> Type E
+
+    <input type="submit">
+  </form>
 </template>

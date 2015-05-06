@@ -1,7 +1,7 @@
 CounterController = RouteController.extend({
   subscriptions: function () {
     this.subscribe('App').wait();
-    this.subscribe('Queue').wait();
+    //this.subscribe('Queue', Meteor.user().profile.privilages).wait();
   },
 
   data: function () {

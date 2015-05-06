@@ -223,5 +223,17 @@ Meteor.methods({
         multi: true
       });
     }, 1000);
+  },
+  'editCounter': function(_id, id, msr, privilages){
+    //privilage
+    Meteor.users.update({
+      _id: _id
+    }, {
+      $set:{
+        'profile.id': id,
+        'profile.msr': msr,
+        'profile.privilages': privilages
+      }
+    });
   }
 });

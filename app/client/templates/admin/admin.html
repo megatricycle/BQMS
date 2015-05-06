@@ -1,94 +1,160 @@
 <template name="Admin">
 
-  <h3>App settings</h3>
-  Branch name: {{app.name}}
-  <form id="app-form">
-    <input id="app-form-name" type="text" name="name" value="{{app.name}}">
-    <input type="submit">
-  </form>
+  {{> core_toolbar_link}}
+  {{> core_menu_link}}
+  {{> core_item_link}}
+  {{> core_header_panel_link}}
+  {{> core_drawer_panel_link}}
+  {{> core_scaffold_link}}
+  {{> core_icons_link}}
+  {{> core_media_query_link}}
+  {{> paper_button_link}}
+  {{> paper_checkbox_link}}
+  {{> paper_input_link}}
 
+  <core-scaffold>
+
+    <core-header-panel navigation flex mode="seamed">
+      <core-toolbar id="navheader">
+        <span>Menu</span>
+      </core-toolbar>
+      <core-menu>
+        <span>Admin Settings</span>
+        <core-item id="accounts" icon="account-circle" label="Accounts"></core-item>
+        <core-item id="appSettings" icon="settings" label="Application Settings"></core-item>
+      </core-menu>
+    </core-header-panel>
+
+    <span flex tool><core-icon icon="perm-identity"></core-icon> Admin</span>
+    <span flex tool>{{app.name}}</span>
+    <paper-button id="logout" tool raised>Log out</paper-button>
+
+    <div class="content" fit>
+      {{> Template.dynamic template=current}}
+    </div>
+  </core-scaffold>
+</template>
+
+<template name="Accounts">
   <h3>Accounts</h3>
 
-  <p>Admins</p>
-  <ul>
-    {{#each admins}}
-      <li>{{username}}</li>
-    {{/ each}}
-  </ul>
+  <div layout horizontal>
+    <div class="material-box">
+      <p>Admins</p>
 
-  <p>Add new admin</p>
-  <form id="create-admin" action="">
-    Username: <input id="create-admin-username" type="text">
-    Password: <input id="create-admin-password" type="password">
-    <input type="submit">
-  </form>
+      <p>Add new admin</p>
+      <form id="create-admin" action="">
+        <div layout horizontal>
+          <div>
+            <input id="create-admin-username" placeholder="Username">
+          </div>
+          <div>
+            <input id="create-admin-password" placeholder="Password">
+          </div>
+          <div>
+            <input type="submit" value="Submit">
+          </div>
+        </div>
+      </form>
 
-  <p>Views</p>
-  <ul>
-    {{#each views}}
-      <li>{{username}}</li>
-    {{/ each}}
-  </ul>
+      <ul>
+        {{#each admins}}
+          <li>{{username}}</li>
+        {{/ each}}
+      </ul>
+    </div>
+    <div class="material-box">
+      <p>Views</p>
+      <ul>
+        {{#each views}}
+          <li>{{username}}</li>
+        {{/ each}}
+      </ul>
 
-  <p>Add new view</p>
-  <form id="create-view" action="">
-    Username: <input id="create-view-username" type="text">
-    Password: <input id="create-view-password" type="password">
-    <input type="submit">
-  </form>
+      <p>Add new view</p>
+      <form id="create-view" action="">
+        Username: <input id="create-view-username" type="text">
+        Password: <input id="create-view-password" type="password">
+        <input type="submit">
+      </form>
+    </div>
 
-  <p>Supervisors</p>
-  <ul>
-    {{#each supervisors}}
-      <li>{{username}}</li>
-    {{/ each}}
-  </ul>
+  </div>
 
-  <p>Add new supervisor</p>
-  <form id="create-supervisor" action="">
-    Username: <input id="create-supervisor-username" type="text">
-    Password: <input id="create-supervisor-password" type="password">
-    <input type="submit">
-  </form>
+  <div layout horizontal>
+    <div class="material-box">
+      <p>Supervisors</p>
+      <ul>
+        {{#each supervisors}}
+          <li>{{username}}</li>
+        {{/ each}}
+      </ul>
 
-  <p>Ticketers</p>
-  <ul>
-    {{#each ticketers}}
-      <li>{{username}}</li>
-    {{/ each}}
-  </ul>
+      <p>Add new supervisor</p>
+      <form id="create-supervisor" action="">
+        Username: <input id="create-supervisor-username" type="text">
+        Password: <input id="create-supervisor-password" type="password">
+        <input type="submit">
+      </form>
+    </div>
+    <div class="material-box">
+      <p>Ticketers</p>
+      <ul>
+        {{#each ticketers}}
+          <li>{{username}}</li>
+        {{/ each}}
+      </ul>
 
-  <p>Add new ticketer</p>
-  <form id="create-ticketer" action="">
-    Username: <input id="create-ticketer-username" type="text">
-    Password: <input id="create-ticketer-password" type="password">
-    <input type="submit">
-  </form>
+      <p>Add new ticketer</p>
+      <form id="create-ticketer" action="">
+        Username: <input id="create-ticketer-username" type="text">
+        Password: <input id="create-ticketer-password" type="password">
+        <input type="submit">
+      </form>
+    </div>
+  </div>
 
-  <p>Counters</p>
-  <ul>
-    {{#each counters}}
-      <li>{{username}}: {{profile.id}}</li>
-    {{/ each}}
-  </ul>
+  <div layout horizontal>
+    <div class="material-box">
+      <p>Counters</p>
+      <ul>
+        {{#each counters}}
+          <li>{{username}}: {{profile.id}} - {{profile.privilages}} - {{profile.msr}}</li>
+        {{/ each}}
+      </ul>
 
-  <p>Add new counter</p>
-  <form id="create-counter" action="">
-    Username: <input id="create-counter-username" type="text">
-    Password: <input id="create-counter-password" type="password">
-    Counter ID: <input id="create-counter-id" type="text">
-    Name of MSR: <input id="create-counter-MSR" type="text">
-    <br>
-    Privilages:
-    <br>
-    Type A <input type="checkbox" value="Type A">
-    Type B <input type="checkbox" value="Type B">
-    Type C <input type="checkbox" value="Type C">
-    Type D <input type="checkbox" value="Type D">
-    Type E <input type="checkbox" value="Type E">
-    <input type="submit">
-  </form>
+      <p>Add new counter</p>
+      <form id="create-counter" action="">
+        Username: <input id="create-counter-username" type="text">
+        Password: <input id="create-counter-password" type="password">
+        Counter ID: <input id="create-counter-id" type="text">
+        Name of MSR: <input id="create-counter-MSR" type="text">
+        <br>
+        Privilages:
+        <br>
+        <input type="checkbox" value="Type A"> Type A
+        <input type="checkbox" value="Type B"> Type B
+        <input type="checkbox" value="Type C"> Type C
+        <input type="checkbox" value="Type D"> Type D
+        <input type="checkbox" value="Type E"> Type E
 
+        <input type="submit">
+      </form>
+    </div>
+  </div>
+</template>
 
-
+<template name="AppSettings">
+  <h3>App settings</h3>
+  <div layout horizontal>
+    <div class="material-box" flex>
+      <p>
+        Branch name: {{app.name}}
+      </p>
+      <form id="app-form">
+        <input id="app-form-name" type="text" name="name" value="{{app.name}}">
+        <input type="submit">
+      </form>
+    </div>
+  </div>
 </template>

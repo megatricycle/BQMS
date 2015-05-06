@@ -143,6 +143,11 @@ Template.Counter.helpers({
 /* Counter: Lifecycle Hooks */
 /*****************************************************************************/
 Template.Counter.created = function () {
+  Tracker.autorun(function(){
+    if(!Meteor.user()) return;
+
+    Meteor.subscribe('Queue', Meteor.user().profile.privilages);
+  });
 };
 
 Template.Counter.rendered = function () {

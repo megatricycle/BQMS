@@ -2,13 +2,15 @@
 /* Admin: Event Handlers */
 /*****************************************************************************/
 Template.Admin.events({
-  'submit #app-form': function(e){
-    e.preventDefault();
-
-    var name = $("#app-form").find("#app-form-name").val();
-
-    Meteor.call('appName', name);
+  'click #accounts': function(){
+    Session.set("current", "Accounts");
   },
+  'click #appSettings': function(){
+    Session.set("current", "AppSettings");
+  }
+});
+
+Template.Accounts.events({
   'submit #create-admin': function(e){
     e.preventDefault();
 
@@ -65,7 +67,17 @@ Template.Admin.events({
 
     Meteor.call('newUser', username, password, "counter", id, msr, privilages);
 
-    $("#create-counter")[0].reset()
+    $("#create-counter")[0].reset();
+  }
+});
+
+Template.AppSettings.events({
+  'submit #app-form': function(e){
+    e.preventDefault();
+
+    var name = $("#app-form").find("#app-form-name").val();
+
+    Meteor.call('appName', name);
   }
 });
 
@@ -73,9 +85,15 @@ Template.Admin.events({
 /* Admin: Helpers */
 /*****************************************************************************/
 Template.Admin.helpers({
+  current: function(){
+    return Session.get("current");
+  },
   app: function(){
     return App.findOne();
-  },
+  }
+});
+
+Template.Accounts.helpers({
   admins: function(){
     return Meteor.users.find({'profile.type': 'admin'}, {$sort: {createdAt: 1}});
   },
@@ -93,10 +111,19 @@ Template.Admin.helpers({
   }
 });
 
+Template.AppSettings.helpers({
+  app: function(){
+    return App.findOne();
+  }
+});
+
+
+
 /*****************************************************************************/
 /* Admin: Lifecycle Hooks */
 /*****************************************************************************/
 Template.Admin.created = function () {
+  Session.set("current", "Accounts");
 };
 
 Template.Admin.rendered = function () {

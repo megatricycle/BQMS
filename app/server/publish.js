@@ -13,15 +13,17 @@ Meteor.publish('Counter', function (/* args */) {
   return Counter.find();
 });
 
-Meteor.publish('Queue', function () {
+Meteor.publish('Queue', function (privilages) {
   if(!this.userId){
     this.ready();
     return;
   }
 
-  var privilages = Meteor.users.findOne({_id: this.userId}).profile.privilages;
-
   return Queue.find({category: {$in: privilages}});
+});
+
+Meteor.publish('QueueAll', function () {
+  return Queue.find();
 });
 
 Meteor.publish('App', function (/* args */) {

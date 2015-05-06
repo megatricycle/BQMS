@@ -6,8 +6,10 @@
 
 meteor-platform
 iron:router
-bootstrap
 accounts-password
 accounts-base
 mizzao:timesync
 mrt:moment
+ecwyne:polymer-elements
+bootstrap
+d3js:d3

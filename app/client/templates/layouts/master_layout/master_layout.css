@@ -1,0 +1,29 @@
+html,body {
+  height: 100%;
+  margin: 0;
+  background-color: #E5E5E5;
+  font-family: 'Roboto', sans-serif;
+}
+
+#navheader {
+  background: #2196F3;
+  color: white;
+}
+
+core-scaffold::shadow core-toolbar {
+  background: #1976D2;
+  color: white;
+}
+
+.content {
+  padding: 20px;
+}
+
+.material-box {
+  background: white;
+  margin: 15px;
+  padding: 10px;
+  -webkit-box-shadow: 0px 0px 18px -5px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 18px -5px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 18px -5px rgba(0,0,0,0.75);
+}
