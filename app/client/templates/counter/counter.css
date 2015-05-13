@@ -1,5 +1,32 @@
 /*****************************************************************************/
 /* Counter: Style */
 /*****************************************************************************/
-.counter {
+
+core-header-panel {
+  height:100%;
+}
+
+core-toolbar {
+  background: #1976D2;
+  color: white;
+}
+
+.number-container {
+  width: 50%;
+  border: 1px solid black;
+  margin: auto;
+  text-align: center;
+}
+
+.number-container > .main {
+  font-size: 450%;
+  font-weight: bold;
+}
+
+.number-container > .subtitle {
+  font-size: 150%;
+}
+
+.text-md {
+  font-size: 115%;
 }

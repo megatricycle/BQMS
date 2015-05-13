@@ -1,53 +1,83 @@
 <template name="Counter">
-  <p>
-    {{app.name}}
-  </p>
-  <p>
-    {{time}}
-  </p>
-  <p>
-    Branch Queue Management System by Peter
-  </p>
-  <p>
-    Counter {{user.profile.id}}
-  </p>
-  <p>
-    MSR name: {{user.profile.msr}}
-  </p>
-  <p>
-    Your privilages: {{user.profile.privilages}}
-  </p>
-  Currently serving:
-  {{#if user.profile.currently_serving}}
-    {{user.profile.currently_serving.ticket_number}} - {{user.profile.currently_serving.name}}
-  {{/if}}
-  <br>
-  Put on hold countdown: {{user.profile.put_on_hold_countdown}}
-  <br>
-  Service time: {{serviceTime}}
-  <br>
-  <button id="callNext" type="button" {{callNextDisabled}}>Call Next</button>
-  <br>
-  <button id="sendAlert" type="button" {{servingTicketDisabled}}>Send Alert</button>
-  <br>
-  <button id="putOnHold" type="button" {{putOnHoldDisabled}}>Put on Hold</button>
-  <br>
-  <button id="noShow" type="button" {{noShowDisabled}}>No show</button>
-  <br>
-  <button id="startTransaction" type="button" {{startTransactionDisabled}}>Start transaction</button>
-  <br>
-  <button id="endTransaction" type="button" {{endTransactionDisabled}}>End transaction</button>
-  <br>
-  <button id="break" type="button" {{breakDisabled}}>Break</button>
-  <br>
-  <p>
-    On hold:
-  </p>
-  <ul>
-    {{#each user.profile.tickets_on_hold}}
-    <li>
-      <button class="ticket-call" type="button" data-ticket="{{_id}}" {{ticketOnHoldDisabled}}>{{ticket_number}}</button>
-    </li>
-    {{/each}}
-  </ul>
+  {{> core_header_panel_link}}
+  {{> core_toolbar_link}}
+  {{> core_icons_link}}
+  {{> paper_button_link}}
+
+  <core-header-panel flex>
+    <core-toolbar id="mainheader">
+      <span flex><core-icon icon="perm-identity"></core-icon> Counter</span>
+      <span flex>{{app.name}}</span>
+      <span flex>{{time}}</span>
+      <paper-button id="logout" raised>Log out</paper-button>
+    </core-toolbar>
+
+    <div class="content">
+      <div class="row">
+        <!-- left side -->
+        <div class="col s12 m12 l4">
+          <div class="text-md material-box z-depth-1">
+            <p>
+              Counter {{user.profile.id}}
+            </p>
+            <p>
+              MSR name: {{user.profile.msr}}
+            </p>
+            <p>
+              Your privilages: {{user.profile.privilages}}
+            </p>
+          </div>
+          <div class="material-box z-depth-1">
+            <button id="callNext" class="btn btn-full waves-effect waves-light {{callNextDisabled}}" type="button" {{callNextDisabled}}>Call Next</button>
+            <button id="sendAlert" class="btn btn-full waves-effectwaves-light {{servingTicketDisabled}}" type="button" {{servingTicketDisabled}}>Send Alert</button>
+            <button id="putOnHold" class="btn btn-full waves-effectwaves-light {{putOnHoldDisabled}}" type="button" {{putOnHoldDisabled}}>Put on Hold</button>
+            <button id="noShow" class="btn btn-full waves-effect waves-light {{noShowDisabled}}" type="button" {{noShowDisabled}}>No show</button>
+            <button id="startTransaction" class="btn btn-full waves-effect waves-light {{startTransactionDisabled}}" type="button" {{startTransactionDisabled}}>Start transaction</button>
+            <button id="endTransaction" class="btn btn-full waves-effect waves-light {{endTransactionDisabled}}" type="button" {{endTransactionDisabled}}>End transaction</button>
+          </div>
+        </div>
+        <!-- right side -->
+        <div class="col s12 m12 l8">
+          <div class="material-box z-depth-1">
+            <div class="number-container">
+              <span class="main">
+                {{#if user.profile.currently_serving}}
+                  {{user.profile.currently_serving.ticket_number}}
+                {{else}}
+                  &nbsp;
+                {{/if}}
+              </span>
+              <br/>
+              <span class="subtitle">
+                {{#if user.profile.currently_serving}}
+                  {{user.profile.currently_serving.name}}
+                {{else}}
+                  &nbsp;
+                {{/if}}
+              </span>
+            </div>
+            <p class="left">
+              Put on hold countdown: {{user.profile.put_on_hold_countdown}}
+            </p>
+            <p class="right">
+              Service time: {{serviceTime}}
+            </p>
+            <div style="clear:both;"></div>
+          </div>
+          <div class="material-box z-depth-1">
+            <p>
+              On hold:
+            </p>
+            <ul>
+              {{#each user.profile.tickets_on_hold}}
+              <li>
+                <button class="btn btn-full waves-effectwaves-light ticket-call {{ticketOnHoldDisabled}}" type="button" {{ticketOnHoldDisabled}}>{{ticket_number}}</button>
+              </li>
+              {{/each}}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </core-header-panel>
 </template>

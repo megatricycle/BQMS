@@ -1,184 +1,146 @@
-<!-- @TODO: I can make this dynamic -->
-
 <template name="Ticketer">
-  {{name}}
-  <br>
-  {{time}}
-  <ul>
-    <li data-category="Type A">
-      Type A - Slow Moving Transactions
-      <ul>
-        <li data-type="Benefit Claim Application">
-          Benefit Claim Application
-          <ul>
-            <li>
-              <button data-name="Death Claim">Death Claim</button>
-            </li>
-            <li>
-              <button data-name="Disability Claim">Disability Claim</button>
-            </li>
-            <li>
-              <button data-name="Retirement Claim">Retirement Claim</button>
-            </li>
-            <li>
-              <button data-name="Funeral Claim">Funeral Claim</button>
-            </li>
-            <li>
-              <button data-name="Maternity Claim">Maternity Claim</button>
-            </li>
-            <li>
-              <button data-name="Sickness Claim">Sickness Claim</button>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li data-category="Type B">
-      Type B - Fast Moving Transactions
-      <ul>
-        <li data-type="Registration">
-          Registration
-          <ul>
-            <li>
-              <button data-name="Issuance of SSS number">Issuance of SSS number</button>
-            </li>
-            <li>
-              <button data-name="Registration of Employer">Registration of Employer</button>
-            </li>
-            <li>
-              <button data-name="Issuance of Employer Certificate of Compliance">Issuance of Employer Certificate of Compliance</button>
-            </li>
-            <li>
-              <button data-name="Application of UMID">Application of UMID</button>
-            </li>
-            <li>
-              <button data-name="Employers's Enrollment in SicMat Payment thru the Bank">Employers's Enrollment in SicMat Payment thru the Bank</button>
-            </li>
-            <li>
-              <button data-name="Peso Enrollment">Peso Enrollment</button>
-            </li>
-            <li>
-              <button data-name="SSS Web Registration">SSS Web Registration</button>
-            </li>
-          </ul>
-        </li>
-        <li data-type="Data Amendment">
-          Data Amendment
-          <ul>
-            <li>
-              <button data-name="Member Data Amendment">Member Data Amendment</button>
-            </li>
-            <li>
-              <button data-name="Employer Data Amendment">Employer Data Amendment</button>
-            </li>
-          </ul>
-        </li>
-        <li data-type="Loan Application">
-          Loan Application
-          <ul>
-            <li>
-              <button data-name="Salary Loan">Salary Loan</button>
-            </li>
-            <li>
-              <button data-name="Calamity Loan">Calamity Loan</button>
-            </li>
-            <li>
-              <button data-name="Educational Assistance Loan Program (EALP)">Educational Assistance Loan Program (EALP)</button>
-            </li>
-          </ul>
-        </li>
-        <li data-type="Notification/Compliance">
-          Notification/Compliance
-          <ul>
-            <li>
-              <button data-name="Annual Confirmation of Pensioners (ACOP)">Annual Confirmation of Pensioners (ACOP)</button>
-            </li>
-            <li>
-              <button data-name="Maternity Notification">Maternity Notification</button>
-            </li>
-            <li>
-              <button data-name="Sickness Notification">Sickness Notification</button>
-            </li>
-          </ul>
-        </li>
-        <li data-type="Adjustment of Contribution">
-          Adjustment of Contribution
-          <ul>
-            <li>
-              <button data-name="Adjustment of Contribution">Adjustment of Contribution</button>
-            </li>
-          </ul>
-        </li>
-        <li data-type="Adjustment of Credited Years of Service">
-          Adjustment of Credited Years of Service
-          <ul>
-            <li>
-              <button data-name="Adjustment of Credited Years of Service">Adjustment of Credited Years of Service</button>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li data-category="Type C">
-      Type C - Payments
-      <ul>
-        <li data-type="Tellering">
-          Tellering
-          <ul>
-            <li>
-              <button data-name="Contribution Payments">Contribution Payments</button>
-            </li>
-            <li>
-              <button data-name="Loan Payments">Loan Payments</button>
-            </li>
-            <li>
-              <button data-name="Miscellaneous Payments">Miscellaneous Payments</button>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li data-category="Type D">
-      Type D - Corporate Transactions
-      <ul>
-        <li data-type="Submission of Reports">
-          Submission of Reports
-          <ul>
-            <li>
-              <button data-name="Contribution Collection List (Manual Submission)">Contribution Collection List (Manual Submission)</button>
-            </li>
-            <li>
-              <button data-name="Contribution Collection List (USB Electronic Submission)">Contribution Collection List (USB Electronic Submission)</button>
-            </li>
-            <li>
-              <button data-name="Loan Repayment Collection List (Manual Submission)">Loan Repayment Collection List (Manual Submission)</button>
-            </li>
-            <li>
-              <button data-name="Loan Repayment Collection List (USB Electronic Submission)">Loan Repayment Collection List (USB Electronic Submission)</button>
-            </li>
-            <li>
-              <button data-name="Employer's Report (R1A)">Employer's Report (R1A)</button>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li data-category="Type E">
-      Type E - Public Assistance and Complaints
-      <ul>
-        <li data-type="Public Assistance and Complaints">
-          Public Assistance and Complaints
-          <ul>
-            <li>
-              <button data-name="Public Assistance">Public Assistance</button>
-            </li>
-            <li>
-              <button data-name="Complaints">Complaints</button>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-  </ul>
+  {{> core_toolbar_link}}
+  {{> core_menu_link}}
+  {{> core_item_link}}
+  {{> core_header_panel_link}}
+  {{> core_drawer_panel_link}}
+  {{> core_scaffold_link}}
+  {{> core_icons_link}}
+  {{> paper_button_link}}
 
+  <core-scaffold>
+
+    <core-header-panel navigation flex mode="seamed">
+      <core-toolbar id="navheader">
+        <span>Menu</span>
+      </core-toolbar>
+      <core-menu>
+        <span>Transaction Group</span>
+        <core-item id="typeA" class="core-item-big" icon="settings" label="Type A"></core-item>
+        <core-item id="typeB" class="core-item-big" icon="settings" label="Type B"></core-item>
+        <core-item id="typeC" class="core-item-big" icon="settings" label="Type C"></core-item>
+        <core-item id="typeD" class="core-item-big" icon="settings" label="Type D"></core-item>
+        <core-item id="typeE" class="core-item-big" icon="settings" label="Type E"></core-item>
+      </core-menu>
+    </core-header-panel>
+
+    <span flex tool><core-icon icon="perm-identity"></core-icon> Ticketer</span>
+    <span flex tool>{{app.name}}</span>
+    <span flex tool>{{time}}</span>
+    <paper-button id="logout" tool raised>Log out</paper-button>
+
+    <div class="content" fit>
+      {{> Template.dynamic template=current}}
+    </div>
+  </core-scaffold>
+
+</template>
+
+<template name="type_a">
+  <div class="full row no-margin">
+    <div class="full col s12 m12 l6">
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type A" data-type="Benefit Claim Application" data-name="Death Claim">Death Claim</button>
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type A" data-type="Benefit Claim Application" data-name="Disability Claim">Disability Claim</button>
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type A" data-type="Benefit Claim Application" data-name="Retirement Claim">Retirement Claim</button>
+    </div>
+    <div class="full col s12 m12 l6">
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type A" data-type="Benefit Claim Application" data-name="Funeral Claim">Funeral Claim</button>
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type A" data-type="Benefit Claim Application" data-name="Maternity Claim">Maternity Claim</button>
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type A" data-type="Benefit Claim Application" data-name="Sickness Claim">Sickness Claim</button>
+    </div>
+  </div>
+</template>
+
+<template name="type_b">
+  <div class="full row no-margin">
+    <div class="full col s12 m12 l6">
+      <button class="btn-transaction category btn waves-effect waves-light" data-category="Registration">Registration</button>
+      <button class="btn-transaction category btn waves-effect waves-light" data-category="Data_Amendment">Data Amendment</button>
+      <button class="btn-transaction category btn waves-effect waves-light" data-category="Loan_Application">Loan Application</button>
+    </div>
+    <div class="full col s12 m12 l6">
+      <button class="btn-transaction category btn waves-effect waves-light" data-category="Notification/Compliance">Notification/Compliance</button>
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-type="Type B" data-category="Adjustment of Contribution" data-name="Adjustment of Contribution">Adjustment of Contribution</button>
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-type="Type B" data-category="Adjustment of Credited Years of Service" data-name="Adjustment of Credited Years of Service">Adjustment of Credited Years Service</button>
+    </div>
+  </div>
+</template>
+
+<template name="Registration">
+  <div class="full row no-margin">
+    <div class="full col s12 m12 l6">
+      <button class="btn-transaction transaction four btn waves-effect waves-light" data-category="Type B" data-type="Registration" data-name="SS Number Issuance">SS Number Issuance</button>
+      <button class="btn-transaction transaction four btn waves-effect waves-light" data-category="Type B" data-type="Registration" data-name="Employer Registration">Employer Registration</button>
+      <button class="btn-transaction transaction four btn waves-effect waves-light" data-category="Type B" data-type="Registration" data-name="UMID Application">UMID Application</button>
+      <button class="btn-transaction transaction four btn waves-effect waves-light" data-category="Type B" data-type="Registration" data-name="Employer Certificate of Compliance Issuance">Employer Certificate of Compliance Issuance</button>
+    </div>
+    <div class="full col s12 m12 l6">
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type B" data-type="Registration" data-name="Employer's Enrollment in SicMat Payment thru the Bank">Employer's Enrollment in SicMat Payment thru the Bank</button>
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type B" data-type="Registration" data-name="PESO Enrollment">PESO Enrollment</button>
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type B" data-type="Registration" data-name="SSS Web Registration">SSS Web Registration</button>
+    </div>
+  </div>
+</template>
+
+<template name="Data_Amendment">
+  <div class="full row no-margin">
+    <div class="full col s12 m12 l6">
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type B" data-type="Data Amendment" data-name="Member Data Amendment">Member Data Amendment</button>
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type B" data-type="Data Amendment" data-name="Employer Data Amendment">Employer Data Amendment</button>
+    </div>
+  </div>
+</template>
+
+<template name="Loan_Application">
+  <div class="full row no-margin">
+    <div class="full col s12 m12 l6">
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type B" data-type="Loan Application" data-name="Salary Loan">Salary Loan</button>
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type B" data-type="Loan Application" data-name="Calamity Loan">Calamity Loan</button>
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type B" data-type="Loan Application" data-name="Education Assistance Loan Program (EALP)">Education Assistance Loan Program (EALP)</button>
+    </div>
+  </div>
+</template>
+
+<template name="Notification/Compliance">
+  <div class="full row no-margin">
+    <div class="full col s12 m12 l6">
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type B" data-type="Notification/Compliance" data-name="Annual Confirmation of Pensioners (ACOP)">Annual Confirmation of Pensioners (ACOP)</button>
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type B" data-type="Notification/Compliance" data-name="Maternity Notification">Maternity Notification</button>
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type B" data-type="Notification/Compliance" data-name="Sickness Notification">Sickness Notification</button>
+    </div>
+  </div>
+</template>
+
+<template name="type_c">
+  <div class="full row no-margin">
+    <div class="full col s12 m12 l6">
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type C" data-type="Tellering" data-name="Contribution Payments">Contribution Payments</button>
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type C" data-type="Tellering" data-name="Loan Payments">Loan Payments</button>
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type C" data-type="Tellering" data-name="Miscellaneous Payments">Miscellaneous Payments</button>
+    </div>
+  </div>
+</template>
+
+<template name="type_d">
+  <div class="full row no-margin">
+    <div class="full col s12 m12 l6">
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type D" data-type="Submission of Reports" data-name="Contribution Collection List (Manual Submission)">Contribution Collection List (Manual Submission)</button>
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type D" data-type="Submission of Reports" data-name="Loan Repayment Collection List (Manual Submission)">Loan Repayment Collection List (Manual Submission)</button>
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type D" data-type="Submission of Reports" data-name="Employer's Report (R1A)">Employer's Report (R1A)</button>
+    </div>
+    <div class="full col s12 m12 l6">
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type D" data-type="Submission of Reports" data-name="Contribution Collection List (USB Electronic Submission)">Contribution Collection List (USB Electronic Submission)</button>
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type D" data-type="Submission of Reports" data-name="Loan Repayment Collection List (USB Electronic Submission)">Loan Repayment Collection List (USB Electronic Submission)</button>
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type D" data-type="Submission of Reports" data-name="Others">Others</button>
+    </div>
+  </div>
+</template>
+
+<template name="type_e">
+  <div class="full row no-margin">
+    <div class="full col s12 m12 l6">
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type E" data-type="Public Assistance and Complaints" data-name="Public Assistance">Public Assistance</button>
+      <button class="btn-transaction transaction btn waves-effect waves-light" data-category="Type E" data-type="Public Assistance and Complaints" data-name="Complaints">Complaints</button>
+    </div>
+  </div>
 </template>

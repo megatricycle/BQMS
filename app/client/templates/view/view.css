@@ -1,5 +1,38 @@
 /*****************************************************************************/
 /* View: Style */
 /*****************************************************************************/
-.view {
+.full-y {
+  height: 100%;
+}
+
+#video-container {
+  height: 88.2%;
+  margin-bottom: 1.5%;
+}
+
+#message-container {
+  height: 10%;
+  padding-left: 0;
+  padding-right: 0;
+  position: relative;
+}
+
+#ticket-container label {
+  font-size: 150%;
+}
+
+.counter-item {
+  font-size: 150%;
+  font-weight: bold;
+}
+
+#marquee-container {
+  list-style: none;
+  position: absolute;
+  width: 100%;
+}
+
+.marquee-item {
+  display: inline;
+  white-space: nowrap;
 }

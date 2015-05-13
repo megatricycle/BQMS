@@ -20,8 +20,8 @@ Template.Counter.events({
   'click #endTransaction': function(){
     Meteor.call('endTransaction', Meteor.userId());
   },
-  'click .ticket-call': function(e){
-    Meteor.call('ticketCall', Meteor.userId(), $(e.target).data("ticket"));
+  'click .ticket-call': function(){
+    Meteor.call('ticketCall', Meteor.userId(), this._id);
   }
 });
 
@@ -120,15 +120,6 @@ Template.Counter.helpers({
     return "";
   },
   'ticketOnHoldDisabled': function(){
-    if(!Meteor.user()){
-      return;
-    }
-
-    if(Meteor.user().profile.currently_serving) return "disabled";
-
-    return "";
-  },
-  'breakDisabled': function(){
     if(!Meteor.user()){
       return;
     }

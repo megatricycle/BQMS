@@ -8,6 +8,8 @@ ViewController = RouteController.extend({
     // return a global data context like this:
     // Items.findOne({_id: this.params._id});
   },
+  
+  layoutTemplate: 'MasterLayout',
 
   action: function () {
     // You can create as many action functions as you'd like.

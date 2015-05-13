@@ -7,6 +7,9 @@ Template.Admin.events({
   },
   'click #appSettings': function(){
     Session.set("current", "AppSettings");
+  },
+  'click #videos': function(){
+    Session.set("current", "Videos");
   }
 });
 
@@ -68,6 +71,28 @@ Template.Accounts.events({
     Meteor.call('newUser', username, password, "counter", id, msr, privilages);
 
     $("#create-counter")[0].reset();
+  },
+  'submit #edit-counter': function(e){
+    e.preventDefault();
+
+    var id = $("#edit-counter").find("#edit-counter-id").val(),
+        msr = $("#edit-counter").find("#edit-counter-MSR").val(),
+        privilages = [];
+
+      //select all privilages
+      $("#edit-counter").find("input:checked").each(function(){
+        privilages.push(this.value);
+      });
+
+    Meteor.call('editCounter', this._id, id, msr, privilages);
+
+    Session.set('selected', null);
+  },
+  'click .edit-btn': function(){
+    Session.set('selected', this.username);
+  },
+  'click .delete-btn': function(){
+    Meteor.call("removeUser", this._id);
   }
 });
 
@@ -81,6 +106,15 @@ Template.AppSettings.events({
   }
 });
 
+Template.Videos.events({
+  'click #upload-button': function(){
+    $('#video-file').click();
+  },
+  'change #video-file': function(){
+    console.log("HYA!");
+  }
+});
+
 /*****************************************************************************/
 /* Admin: Helpers */
 /*****************************************************************************/
@@ -88,8 +122,11 @@ Template.Admin.helpers({
   current: function(){
     return Session.get("current");
   },
-  app: function(){
-    return App.findOne();
+  'app': function(){
+    return App.find().fetch()[0];
+  },
+  'time': function(){
+    return moment(TimeSync.serverTime()).format("MM/DD/YYYY hh:mm:ss a");
   }
 });
 
@@ -108,6 +145,12 @@ Template.Accounts.helpers({
   },
   counters: function(){
     return Meteor.users.find({'profile.type': 'counter'}, {$sort: {createdAt: 1}});
+  },
+  selected: function(id){
+    return Session.get('selected') == id? true: false;
+  },
+  isChecked: function(privilages, category){
+    return privilages.indexOf(category) == -1? '': "checked";
   }
 });
 
@@ -116,7 +159,6 @@ Template.AppSettings.helpers({
     return App.findOne();
   }
 });
-
 
 
 /*****************************************************************************/

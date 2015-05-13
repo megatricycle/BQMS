@@ -11,5 +11,7 @@ accounts-base
 mizzao:timesync
 mrt:moment
 ecwyne:polymer-elements
-bootstrap
 d3js:d3
+materialize:materialize
+cfs:standard-packages
+cfs:filesystem

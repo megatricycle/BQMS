@@ -7,10 +7,7 @@
   {{> core_drawer_panel_link}}
   {{> core_scaffold_link}}
   {{> core_icons_link}}
-  {{> core_media_query_link}}
   {{> paper_button_link}}
-  {{> paper_checkbox_link}}
-  {{> paper_input_link}}
 
   <core-scaffold>
 
@@ -22,11 +19,13 @@
         <span>Admin Settings</span>
         <core-item id="accounts" icon="account-circle" label="Accounts"></core-item>
         <core-item id="appSettings" icon="settings" label="Application Settings"></core-item>
+        <core-item id="videos" icon="theaters" label="Videos"></core-item>
       </core-menu>
     </core-header-panel>
 
-    <span flex tool><core-icon icon="perm-identity"></core-icon> Admin</span>
+  <span flex tool><core-icon icon="perm-identity"></core-icon> Admin</span>
     <span flex tool>{{app.name}}</span>
+    <span flex tool>{{time}}</span>
     <paper-button id="logout" tool raised>Log out</paper-button>
 
     <div class="content" fit>
@@ -38,123 +37,366 @@
 <template name="Accounts">
   <h3>Accounts</h3>
 
-  <div layout horizontal>
-    <div class="material-box">
-      <p>Admins</p>
+  <div class="row">
+    <div class="col s12 m12 l6">
+      <div class="material-box z-depth-1">
+        <h5>Admin</h5>
 
-      <p>Add new admin</p>
-      <form id="create-admin" action="">
-        <div layout horizontal>
-          <div>
-            <input id="create-admin-username" placeholder="Username">
+        <label>Add new admin</label>
+
+        <form id="create-admin" action="">
+          <div layout horizontal>
+            <div class="input-field" flex>
+              <input id="create-admin-username" type="text">
+              <label for="create-admin-username">Username</label>
+            </div>
+            <div class="input-field" flex>
+              <input id="create-admin-password" type="text">
+              <label for="create-admin-password">Password</label>
+            </div>
+            <div class="valign-wrapper">
+              <button class="valign btn waves-effect waves-light btn-submit" type="submit">
+                <i class="mdi-content-send right no-margin"></i>
+              </button>
+            </div>
           </div>
-          <div>
-            <input id="create-admin-password" placeholder="Password">
+        </form>
+
+        <label>Admins:</label>
+
+        <ul class="collection">
+          {{#each admins}}
+            {{> account type="admin" username=username _id=_id}}
+          {{/ each}}
+        </ul>
+      </div>
+    </div>
+    <div class="col s12 m12 l6">
+      <div class="material-box z-depth-1">
+        <h5>View</h5>
+
+        <label>Add new view</label>
+
+        <form id="create-view" action="">
+          <div layout horizontal>
+            <div class="input-field" flex>
+              <input id="create-view-username" type="text">
+              <label for="create-view-username">Username</label>
+            </div>
+            <div class="input-field" flex>
+              <input id="create-view-password" type="password">
+              <label for="create-view-password">Password</label>
+            </div>
+            <div class="valign-wrapper">
+              <button class="valign btn waves-effect waves-light btn-submit" type="submit">
+                <i class="mdi-content-send right no-margin"></i>
+              </button>
+            </div>
           </div>
-          <div>
-            <input type="submit" value="Submit">
-          </div>
-        </div>
-      </form>
+        </form>
 
-      <ul>
-        {{#each admins}}
-          <li>{{username}}</li>
-        {{/ each}}
-      </ul>
-    </div>
-    <div class="material-box">
-      <p>Views</p>
-      <ul>
-        {{#each views}}
-          <li>{{username}}</li>
-        {{/ each}}
-      </ul>
+        <label>Views:</label>
 
-      <p>Add new view</p>
-      <form id="create-view" action="">
-        Username: <input id="create-view-username" type="text">
-        Password: <input id="create-view-password" type="password">
-        <input type="submit">
-      </form>
-    </div>
-
-  </div>
-
-  <div layout horizontal>
-    <div class="material-box">
-      <p>Supervisors</p>
-      <ul>
-        {{#each supervisors}}
-          <li>{{username}}</li>
-        {{/ each}}
-      </ul>
-
-      <p>Add new supervisor</p>
-      <form id="create-supervisor" action="">
-        Username: <input id="create-supervisor-username" type="text">
-        Password: <input id="create-supervisor-password" type="password">
-        <input type="submit">
-      </form>
-    </div>
-    <div class="material-box">
-      <p>Ticketers</p>
-      <ul>
-        {{#each ticketers}}
-          <li>{{username}}</li>
-        {{/ each}}
-      </ul>
-
-      <p>Add new ticketer</p>
-      <form id="create-ticketer" action="">
-        Username: <input id="create-ticketer-username" type="text">
-        Password: <input id="create-ticketer-password" type="password">
-        <input type="submit">
-      </form>
+        <ul class="collection">
+          {{#each views}}
+            {{> account type="view" username=username _id=_id}}
+          {{/ each}}
+        </ul>
+      </div>
     </div>
   </div>
 
-  <div layout horizontal>
-    <div class="material-box">
-      <p>Counters</p>
-      <ul>
-        {{#each counters}}
-          <li>{{username}}: {{profile.id}} - {{profile.privilages}} - {{profile.msr}}</li>
-        {{/ each}}
-      </ul>
+  <div class="row">
+    <div class="col s12 m12 l6">
+      <div class="material-box z-depth-1">
+        <h5>Supervisor</h5>
 
-      <p>Add new counter</p>
-      <form id="create-counter" action="">
-        Username: <input id="create-counter-username" type="text">
-        Password: <input id="create-counter-password" type="password">
-        Counter ID: <input id="create-counter-id" type="text">
-        Name of MSR: <input id="create-counter-MSR" type="text">
-        <br>
-        Privilages:
-        <br>
-        <input type="checkbox" value="Type A"> Type A
-        <input type="checkbox" value="Type B"> Type B
-        <input type="checkbox" value="Type C"> Type C
-        <input type="checkbox" value="Type D"> Type D
-        <input type="checkbox" value="Type E"> Type E
+        <label>Add new supervisor</label>
 
-        <input type="submit">
-      </form>
+        <form id="create-supervisor" action="">
+          <div layout horizontal>
+            <div class="input-field" flex>
+              <input id="create-supervisor-username" type="text">
+              <label for="create-supervisor-username">Username</label>
+            </div>
+            <div class="input-field" flex>
+              <input id="create-supervisor-password" type="password">
+              <label for="create-supervisor-password">Password</label>
+            </div>
+            <div class="valign-wrapper">
+              <button class="valign btn waves-effect waves-light btn-submit" type="submit">
+                <i class="mdi-content-send right no-margin"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <label>Supervisors:</label>
+
+        <ul class="collection">
+          {{#each supervisors}}
+            {{> account type="supervisor" username=username _id=_id}}
+          {{/ each}}
+        </ul>
+      </div>
+    </div>
+    <div class="col s12 m12 l6">
+      <div class="material-box z-depth-1">
+        <h5>Ticketer</h5>
+
+        <label>Add new ticketer</label>
+
+        <form id="create-ticketer" action="">
+          <div layout horizontal>
+            <div class="input-field" flex>
+              <input id="create-ticketer-username" type="text">
+              <label for="create-ticketer-username">Username</label>
+            </div>
+            <div class="input-field" flex>
+              <input id="create-ticketer-password" type="password">
+              <label for="create-ticketer-password">Password</label>
+            </div>
+            <div class="valign-wrapper">
+              <button class="valign btn waves-effect waves-light btn-submit" type="submit">
+                <i class="mdi-content-send right no-margin"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <label>Ticketers:</label>
+
+        <ul class="collection">
+          {{#each ticketers}}
+            {{> account type="ticketer" username=username _id=_id}}
+          {{/ each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12 m12 lg12">
+      <div class="material-box z-depth-1">
+        <h5>Counter</h5>
+        <label>Add new counter</label>
+
+        <form id="create-counter" action="">
+          <div layout horizontal>
+            <div class="input-field" flex>
+              <input id="create-counter-username" type="text">
+              <label for="create-counter-username">Username</label>
+            </div>
+            <div class="input-field" flex>
+              <input id="create-counter-password" type="password">
+              <label for="create-counter-password">Password</label>
+            </div>
+            <div class="input-field" flex>
+              <input id="create-counter-id" type="text">
+              <label for="create-counter-id">Counter ID</label>
+            </div>
+            <div class="input-field" flex>
+              <input id="create-counter-MSR" type="text">
+              <label for="create-counter-MSR">MSR</label>
+            </div>
+          </div>
+
+          <div layout horizontal>
+            <div class="center-align">
+              <label>Privilages:</label>
+            </div>
+            <div class="center-align" flex>
+              <input type="checkbox" id="typeA" value="Type A">
+              <label for="typeA">Type A</label>
+            </div>
+            <div class="center-align" flex>
+              <input type="checkbox" id="typeB" value="Type B">
+              <label for="typeB">Type B</label>
+            </div>
+            <div class="center-align" flex>
+              <input type="checkbox" id="typeC" value="Type C">
+              <label for="typeC">Type C</label>
+            </div>
+            <div class="center-align" flex>
+              <input type="checkbox" id="typeD" value="Type D">
+              <label for="typeD">Type D</label>
+            </div>
+            <div class="center-align" flex>
+              <input type="checkbox" id="typeE" value="Type E">
+              <label for="typeE">Type E</label>
+            </div>
+            <div class="valign-wrapper">
+              <button class="valign btn waves-effect waves-light btn-submit" type="submit">
+                <i class="mdi-content-send right no-margin"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <label>Counters:</label>
+
+        <ul class="collection">
+          {{#each counters}}
+            {{#if selected username}}
+              <li class="collection-item avatar">
+                <img src="images/counter.jpg" alt="" class="circle" />
+                <form id="edit-counter">
+                  <div layout horizontal>
+                    <div flex>
+                      <label>Username:</label>
+                      <p>
+                        {{username}}
+                      </p>
+                    </div>
+                    <div class="input-field" flex>
+                      <input id="edit-counter-id" type="text" value="{{profile.id}}">
+                      <label class="active" for="edit-counter-id">ID</label>
+                    </div>
+                    <div flex>
+                      <input id="typeA2" type="checkbox" value="Type A" {{isChecked profile.privilages "Type A"}}>
+                      <label for="typeA2">Type A</label>
+                      <input id="typeB2" type="checkbox" value="Type B" {{isChecked profile.privilages "Type B"}}>
+                      <label for="typeB2">Type B</label>
+                      <input id="typeC2" type="checkbox" value="Type C" {{isChecked profile.privilages "Type C"}}>
+                      <label for="typeC2">Type C</label>
+                      <input id="typeD2" type="checkbox" value="Type D" {{isChecked profile.privilages "Type D"}}>
+                      <label for="typeD2">Type D</label>
+                      <input id="typeE2" type="checkbox" value="Type E" {{isChecked profile.privilages "Type E"}}>
+                      <label for="typeE2">Type E</label>
+                    </div>
+                    <div class="input-field" flex>
+                      <input id="edit-counter-MSR" type="text" value="{{profile.msr}}">
+                      <label class="active" for="edit-counter-MSR">MSR</label>
+                    </div>
+                    <button class="valign btn waves-effect waves-light btn-submit" type="submit">
+                      <i class="mdi-navigation-check right no-margin"></i>
+                    </button>
+                  </div>
+                </form>
+              </li>
+            {{else}}
+              <li class="collection-item avatar">
+                <img src="images/counter.jpg" alt="" class="circle" />
+                <div layout horizontal>
+                  <div flex>
+                    <label>Username:</label>
+                    <p>
+                      {{username}}
+                    </p>
+                  </div>
+                  <div flex>
+                    <label>ID:</label>
+                    <p>
+                      {{profile.id}}
+                    </p>
+                  </div>
+                  <div flex>
+                    <label>Privilages:</label>
+                    <p>
+                      {{profile.privilages}}
+                    </p>
+                  </div>
+                  <div flex>
+                    <label>MSR:</label>
+                    <p>
+                      {{profile.msr}}
+                    </p>
+                  </div>
+                  <div class="valign-wrapper">
+                    <button class="valign btn waves-effect waves-light btn-submit edit-btn" type="button">
+                      <i class="mdi-image-edit right no-margin"></i>
+                    </button>
+                  </div>
+                  <div class="valign-wrapper">
+                    <button class="valign btn waves-effect waves-light btn-submit delete-btn" type="button">
+                      <i class="mdi-action-delete right no-margin"></i>
+                    </button>
+                  </div>
+                </div>
+              </li>
+            {{/if}}
+          {{/ each}}
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 
+<template name="account">
+  <li class="collection-item avatar">
+    <img src="images/{{type}}.jpg" alt="" class="circle" />
+    <div layout horizontal>
+      <div flex>
+        <label>Username:</label>
+        <p>
+          {{username}}
+        </p>
+      </div>
+      <div class="valign-wrapper">
+        <button class="valign btn waves-effect waves-light btn-submit delete-btn" type="button">
+          <i class="mdi-action-delete right no-margin"></i>
+        </button>
+      </div>
+    </div>
+  </li>
+</template>
+
 <template name="AppSettings">
   <h3>App settings</h3>
-  <div layout horizontal>
-    <div class="material-box" flex>
-      <p>
-        Branch name: {{app.name}}
-      </p>
-      <form id="app-form">
-        <input id="app-form-name" type="text" name="name" value="{{app.name}}">
-        <input type="submit">
-      </form>
+  <div class="row">
+    <div class="col s12 m12 l12">
+      <div layout horizontal>
+        <div class="material-box z-depth-1" flex>
+          <p>
+            Branch name: {{app.name}}
+          </p>
+          <form id="app-form">
+            <div layout horizontal>
+              <div class="input-field" flex>
+                <input id="app-form-name" type="text" name="name" value="{{app.name}}">
+                <label class="active" for="app-form-name">Application name</label>
+              </div>
+              <div class="valign-wrapper">
+                <button class="valign btn waves-effect waves-light btn-submit" type="submit">
+                  <i class="mdi-content-send right no-margin"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="Videos">
+  <div class="row">
+    <div class="col l12">
+      <h3>Videos</h3>
+      <div class="material-box z-depth-1">
+        <h5>Videos</h5>
+
+        <label>Add new video</label>
+
+        <form id="add-video" action="">
+          <div layout horizontal>
+            <div class="valign-wrapper">
+              <button id="upload-button" class="valign btn waves-effect waves-light btn-submit" type="button">
+                <span>Upload</span>
+              </button>
+              <input id="video-file" type="file" accept="video/*" style="display: none;">
+            </div>
+          </div>
+        </form>
+
+        <label>Videos:</label>
+
+        <ul class="collection">
+          <!-- {{#each supervisors}}
+            {{> account type="supervisor" username=username _id=_id}}
+          {{/ each}} -->
+        </ul>
+      </div>
     </div>
   </div>
 </template>

@@ -1,5 +1,19 @@
 /*****************************************************************************/
 /* Ticketer: Style */
 /*****************************************************************************/
-.ticketer {
+.btn-transaction {
+  display: block;
+  width: 100%;
+  height: 31.5%;
+  margin-top: 1.5%;
+  margin-bottom: 1.5%;
+  font-size: 125%;
+}
+
+.four {
+  height: 23.3%;
+}
+
+.core-item-big {
+  height: 100px;
 }

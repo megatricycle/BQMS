@@ -1,13 +1,58 @@
 <template name="View">
-  <p>
-    {{app.name}}
-  </p>
-  <p>
-    {{time}}
-  </p>
-  <ul>
-    {{#each counter}}
-      <li>{{profile.id}} - {{profile.currently_serving.ticket_number}}</li>
-    {{/each}}
-  </ul>
+  {{> core_header_panel_link}}
+  {{> core_toolbar_link}}
+  {{> core_icons_link}}
+  {{> paper_button_link}}
+
+  <core-header-panel flex>
+    <core-toolbar id="mainheader">
+      <span class="center-text"  flex>{{app.name}}</span>
+      <span class="center-text" flex>{{time}}</span>
+    </core-toolbar>
+
+    <div class="content" fit>
+      <div class="full row">
+        <div class="col l8 full-y">
+          <div id="video-container" class="material-box z-depth-1">
+            <!-- insert video here -->
+            <video class="full" src="videos/YSESONLINE.mp4" autoplay loop>
+
+            </video>
+          </div>
+          <div id="message-container" class="valign-wrapper material-box z-depth-1">
+            <ul id="marquee-container">
+              <li class="marquee-item">Test 1</li>
+              <li class="marquee-item">Test 2</li>
+              <li class="marquee-item">Test 3</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col l4 full-y">
+          <div id="ticket-container" class="material-box z-depth-1 full-y">
+            <h4 class="center-text">Now serving</h4>
+            <table>
+              <tr>
+                <td class="center-text">
+                  <label>Counter</label>
+                </td>
+                <td class="center-text">
+                  <label>Ticket</label>
+                </td>
+              </tr>
+              {{#each counter}}
+                <tr class="counter-item">
+                  <td class="center-text">
+                    {{profile.id}}
+                  </td>
+                  <td class="center-text">
+                    {{profile.currently_serving.ticket_number}}
+                  </td>
+                </tr>
+              {{/each}}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </core-header-panel>
 </template>

@@ -235,5 +235,8 @@ Meteor.methods({
         'profile.privilages': privilages
       }
     });
+  },
+  'removeUser': function(_id){
+    Meteor.users.remove({_id: _id});
   }
 });

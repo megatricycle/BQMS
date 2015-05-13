@@ -1,61 +1,193 @@
 <template name="Supervisor">
-  {{app.name}}
-  <br>
-  {{time}}
-  <br>
+  {{> core_toolbar_link}}
+  {{> core_menu_link}}
+  {{> core_item_link}}
+  {{> core_header_panel_link}}
+  {{> core_drawer_panel_link}}
+  {{> core_scaffold_link}}
+  {{> core_icons_link}}
+  {{> core_media_query_link}}
+  {{> paper_button_link}}
 
-  Type A: {{queue.a}}
-  <br>
-  Type B: {{queue.b}}
-  <br>
-  Type C: {{queue.c}}
-  <br>
-  Type D: {{queue.d}}
-  <br>
-  Type E: {{queue.e}}
-  <br>
+  <core-scaffold>
 
-  <p>Counters</p>
-  <ul>
-    {{#each counters}}
-      {{#if selected username}}
-        <li>
-          <form id="edit-counter">
-            {{username}}:
-            <input id="edit-counter-id" type="text" value="{{profile.id}}"> -
-            <input type="checkbox" value="Type A" {{isChecked profile.privilages "Type A"}}> Type A
-            <input type="checkbox" value="Type B" {{isChecked profile.privilages "Type B"}}> Type B
-            <input type="checkbox" value="Type C" {{isChecked profile.privilages "Type C"}}> Type C
-            <input type="checkbox" value="Type D" {{isChecked profile.privilages "Type D"}}> Type D
-            <input type="checkbox" value="Type E" {{isChecked profile.privilages "Type E"}}> Type E -
-            <input id="edit-counter-MSR" type="text" value="{{profile.msr}}">
-            <input type="submit" value="Done">
-          </form>
-        </li>
-      {{else}}
-        <li>
-          {{username}}: {{profile.id}} - {{profile.privilages}} - {{profile.msr}}
-          <button class="edit-btn" type="button">Edit</button>
-        </li>
-      {{/if}}
-    {{/ each}}
-  </ul>
+    <core-header-panel navigation flex mode="seamed">
+      <core-toolbar id="navheader">
+        <span>Menu</span>
+      </core-toolbar>
+      <core-menu>
+        <span>Supervisor</span>
+        <core-item id="queueStatus" icon="assessment" label="Queue Status"></core-item>
+        <core-item id="counterAssignments" icon="settings" label="Counter Assignments"></core-item>
+      </core-menu>
+    </core-header-panel>
 
-  <p>Add new counter</p>
-  <form id="create-counter" action="">
-    Username: <input id="create-counter-username" type="text">
-    Password: <input id="create-counter-password" type="password">
-    Counter ID: <input id="create-counter-id" type="text">
-    Name of MSR: <input id="create-counter-MSR" type="text">
-    <br>
-    Privilages:
-    <br>
-    <input type="checkbox" value="Type A"> Type A
-    <input type="checkbox" value="Type B"> Type B
-    <input type="checkbox" value="Type C"> Type C
-    <input type="checkbox" value="Type D"> Type D
-    <input type="checkbox" value="Type E"> Type E
+    <span flex tool><core-icon icon="perm-identity"></core-icon> Supervisor</span>
+    <span flex tool>{{app.name}}</span>
+    <span flex tool>{{time}}</span>
+    <paper-button id="logout" tool raised>Log out</paper-button>
 
-    <input type="submit">
-  </form>
+    <div class="content" fit>
+      {{> Template.dynamic template=current}}
+    </div>
+  </core-scaffold>
+</template>
+
+<template name="QueueStatus">
+  <h3>Queue Status</h3>
+  <div class="row">
+    <div class="col s12 m12 l12">
+      <div class="material-box z-depth-1">
+        <div class="chart"></div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="CounterAssignments">
+  <div class="row">
+    <div class="col s12 m12 lg12">
+      <div class="material-box z-depth-1">
+        <h5>Counter</h5>
+        <label>Add new counter</label>
+
+        <form id="create-counter" action="">
+          <div layout horizontal>
+            <div class="input-field" flex>
+              <input id="create-counter-username" type="text">
+              <label for="create-counter-username">Username</label>
+            </div>
+            <div class="input-field" flex>
+              <input id="create-counter-password" type="text">
+              <label for="create-counter-password">Password</label>
+            </div>
+            <div class="input-field" flex>
+              <input id="create-counter-id" type="text">
+              <label for="create-counter-id">Counter ID</label>
+            </div>
+            <div class="input-field" flex>
+              <input id="create-counter-MSR" type="text">
+              <label for="create-counter-MSR">MSR</label>
+            </div>
+          </div>
+
+          <div layout horizontal>
+            <div class="center-align">
+              <label>Privilages:</label>
+            </div>
+            <div class="center-align" flex>
+              <input type="checkbox" id="typeA">
+              <label for="typeA">Type A</label>
+            </div>
+            <div class="center-align" flex>
+              <input type="checkbox" id="typeB">
+              <label for="typeB">Type B</label>
+            </div>
+            <div class="center-align" flex>
+              <input type="checkbox" id="typeC">
+              <label for="typeC">Type C</label>
+            </div>
+            <div class="center-align" flex>
+              <input type="checkbox" id="typeD">
+              <label for="typeD">Type D</label>
+            </div>
+            <div class="center-align" flex>
+              <input type="checkbox" id="typeE">
+              <label for="typeE">Type E</label>
+            </div>
+            <div class="valign-wrapper">
+              <button class="valign btn waves-effect waves-light btn-submit" type="submit">
+                <i class="mdi-content-send right no-margin"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <label>Counters:</label>
+
+        <ul class="collection">
+          {{#each counters}}
+            {{#if selected username}}
+              <li class="collection-item avatar">
+                <img src="images/counter.jpg" alt="" class="circle" />
+                <form id="edit-counter">
+                  <div layout horizontal>
+                    <div flex>
+                      <label>Username:</label>
+                      <p>
+                        {{username}}
+                      </p>
+                    </div>
+                    <div class="input-field" flex>
+                      <input id="edit-counter-id" type="text" value="{{profile.id}}">
+                      <label class="active" for="edit-counter-id">ID</label>
+                    </div>
+                    <div flex>
+                      <input id="typeA2" type="checkbox" value="Type A" {{isChecked profile.privilages "Type A"}}>
+                      <label for="typeA2">Type A</label>
+                      <input id="typeB2" type="checkbox" value="Type B" {{isChecked profile.privilages "Type B"}}>
+                      <label for="typeB2">Type B</label>
+                      <input id="typeC2" type="checkbox" value="Type C" {{isChecked profile.privilages "Type C"}}>
+                      <label for="typeC2">Type C</label>
+                      <input id="typeD2" type="checkbox" value="Type D" {{isChecked profile.privilages "Type D"}}>
+                      <label for="typeD2">Type D</label>
+                      <input id="typeE2" type="checkbox" value="Type E" {{isChecked profile.privilages "Type E"}}>
+                      <label for="typeE2">Type E</label>
+                    </div>
+                    <div class="input-field" flex>
+                      <input id="edit-counter-MSR" type="text" value="{{profile.msr}}">
+                      <label class="active" for="edit-counter-MSR">MSR</label>
+                    </div>
+                    <button class="valign btn waves-effect waves-light btn-submit" type="submit">
+                      <i class="mdi-navigation-check right no-margin"></i>
+                    </button>
+                  </div>
+                </form>
+              </li>
+            {{else}}
+              <li class="collection-item avatar">
+                <img src="images/counter.jpg" alt="" class="circle" />
+                <div layout horizontal>
+                  <div flex>
+                    <label>Username:</label>
+                    <p>
+                      {{username}}
+                    </p>
+                  </div>
+                  <div flex>
+                    <label>ID:</label>
+                    <p>
+                      {{profile.id}}
+                    </p>
+                  </div>
+                  <div flex>
+                    <label>Privilages:</label>
+                    <p>
+                      {{profile.privilages}}
+                    </p>
+                  </div>
+                  <div flex>
+                    <label>MSR:</label>
+                    <p>
+                      {{profile.msr}}
+                    </p>
+                  </div>
+                  <div class="valign-wrapper">
+                    <button class="valign btn waves-effect waves-light btn-submit edit-btn" type="button">
+                      <i class="mdi-image-edit right no-margin"></i>
+                    </button>
+                  </div>
+                  <div class="valign-wrapper">
+                    <button class="valign btn waves-effect waves-light btn-submit delete-btn" type="button">
+                      <i class="mdi-action-delete right no-margin"></i>
+                    </button>
+                  </div>
+                </div>
+              </li>
+            {{/if}}
+          {{/ each}}
+        </ul>
+      </div>
+    </div>
+  </div>
 </template>
